@@ -1,5 +1,9 @@
-function MyApp({ Component, pageProps }) {
-  return <Component {...pageProps} />
-}
+import '../styles/main.css';
 
-export default MyApp
+export default function MyApp({ Component, pageProps }) {
+  return (
+    <>
+    <Component {...pageProps} />
+    </>
+  )
+}
