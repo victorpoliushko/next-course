@@ -7,7 +7,7 @@ export default function ErrorPage() {
     <>
       <MainLayout>
       <h1 className={classes.error}>404</h1>
-      <p>Click to <Link href={"/"}><a> go back</a></Link>home</p>
+      <p>Click to <Link href={"/"}><a> go back</a></Link> home</p>
       </MainLayout>
     </>
   );
