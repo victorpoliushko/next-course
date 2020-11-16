@@ -1,23 +1,51 @@
-import { useState, useEffect} from 'react';
-import Head from 'next/head';
+import Link from 'next/link';
+import { useState } from 'react';
 import { MainLayout } from '../components/MainLayout';
 
-export default function Posts() {
-  const [posts, setPosts] = useState([]);
+export default function Posts({ posts: serverPosts }) {
+  const [posts, setPosts] = useState(serverPosts);
 
   useEffect(() => {
     async function load() {
-      const response = await fetch('http://localhost:4200/posts');
-      const json = await response.json();
-      setPosts(json);
+      const response = await fetch(`http://localhost:4200/posts`);
+      const data = await response.json();
+      setPost(data);
     }
-    load();
+
+    if(!serverPost) {
+      load();
+    }
   }, []);
+
+  if(!post) {
+    return(
+      <MainLayout>
+        <p>Loading ...</p>
+      </MainLayout>
+    )
+  }
 
   return(
     <MainLayout title={'Posts page'}>
       <h1>Posts page</h1>
-      <pre>{JSON.stringify(posts, null, 2)}</pre>
+      <ul>
+        {posts.map(post => (
+          <li key={post.id}>
+            <Link href={`/post/[id]}`} as={`/post/${post.id}`}>
+              <a>{post.title}</a></Link>
+          </li>
+        ))}
+        
+      </ul>
     </MainLayout>
   );
+}
+
+Posts.getInitialProps = async ({ req }) => {
+  if(!req) {
+    return { posts: null }
+  }
+  const response = await fetch('http://localhost:4200/posts');
+  const posts = await response.json();
+  return { posts }
 }
