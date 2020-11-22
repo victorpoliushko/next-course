@@ -10,7 +10,7 @@ export default function Post({ post: serverPost }) {
 
   useEffect(() => {
     async function load() {
-      const response = await fetch(`http://localhost:4200/post/${router.query.id}`);
+      const response = await fetch(`http://localhost:4200/posts/${router.query.id}`);
       const data = await response.json();
       setPost(data);
     }
@@ -40,9 +40,10 @@ export default function Post({ post: serverPost }) {
 
 Post.getInitialProps = async ({ query, req }) => {
   if(!req) {
-    return { posts: null }
+    return { post: null }
   }
   const response = await fetch(`http://localhost:4200/posts/${query.id}`);
+  console.log(response);
   const post = await response.json();
   return { post }
 }
