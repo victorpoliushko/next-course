@@ -13,7 +13,7 @@ export default function Posts({ posts: serverPosts }: PostsPageProps) {
 
   useEffect(() => {
     async function load() {
-      const response = await fetch('http://localhost:4200/posts');
+      const response = await fetch(`${process.env.API_URL}/posts`);
       const data = await response.json();
       setPosts(data);
     }
